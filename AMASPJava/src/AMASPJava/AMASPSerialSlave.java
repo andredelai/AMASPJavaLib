@@ -43,8 +43,8 @@ public class AMASPSerialSlave extends AMASPSerial
         {
             pkt[8 + i] = (byte) message[i];
         }
-        //LRC       
-        hex = String.format("%1$03X", LRC(pkt, msgLength + 8)).getBytes();
+        //CRC       
+        hex = String.format("%1$03X", CRC16(pkt, msgLength + 8)).getBytes();
         pkt[8 + msgLength] = (byte) hex[0];
         pkt[8 + msgLength + 1] = (byte) hex[1];
         pkt[8 + msgLength + 2] = (byte) hex[2];
@@ -79,8 +79,8 @@ public class AMASPSerialSlave extends AMASPSerial
         hex = String.format("%1$02X", InterrupCode).getBytes();
         pkt[5] = (byte) hex[0];
         pkt[6] = (byte) hex[1];
-        //LRC
-        hex = String.format("%1$04X", LRC(pkt, 7)).getBytes();
+        //CRC
+        hex = String.format("%1$04X", CRC16(pkt, 7)).getBytes();
         pkt[7] = (byte) hex[0];
         pkt[8] = (byte) hex[1];
         pkt[9] = (byte) hex[2];

@@ -44,8 +44,8 @@ public class AMASPSerialMaster extends AMASPSerial
         {
             pkt[8 + i] = (byte) message[i];
         }
-        //LRC       
-        hex = String.format("%1$03X", LRC(pkt, msgLength + 8)).getBytes();
+        //CRC       
+        hex = String.format("%1$03X", CRC16(pkt, msgLength + 8)).getBytes();
         pkt[8 + msgLength] = (byte) hex[0];
         pkt[8 + msgLength + 1] = (byte) hex[1];
         pkt[8 + msgLength + 2] = (byte) hex[2];
