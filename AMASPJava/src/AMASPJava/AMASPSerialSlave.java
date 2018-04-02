@@ -22,6 +22,12 @@ public class AMASPSerialSlave extends AMASPSerial
     public void sendResponse(int deviceID, byte[] message, int msgLength)
     {
         byte[] hex;
+        
+        if (message.length < msgLength)
+        {
+            msgLength = message.length; //saturating
+        }
+
         //mounting the packet
         byte[] pkt = new byte[msgLength + 14];
 
@@ -55,6 +61,17 @@ public class AMASPSerialSlave extends AMASPSerial
 
         //Sending request
         serialCom.writeBytes(pkt, 14 + msgLength);
+    }
+    
+    /**
+     * Send a SRP (Slave Response Packet) to a master computer.
+     * @param deviceID Id of the slave device who answered. 
+     * @param message The response message to be send.
+     * @param msgLength The message length.
+     */
+    public void sendResponse(int deviceID, String message, int msgLength)
+    {
+        sendResponse(deviceID, message.getBytes(), msgLength);
     }
     
     /**

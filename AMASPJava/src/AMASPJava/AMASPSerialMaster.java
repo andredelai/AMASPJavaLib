@@ -21,8 +21,13 @@ public class AMASPSerialMaster extends AMASPSerial
      */
     public void sendRequest(int deviceID, byte message[], int msgLength)
     {
-
         byte[] hex;
+        
+        if (message.length < msgLength)
+        {
+            msgLength = message.length; //saturating
+        }
+
         //mounting the packet
         byte[] pkt = new byte[msgLength + 14];
 
@@ -58,4 +63,8 @@ public class AMASPSerialMaster extends AMASPSerial
         serialCom.writeBytes(pkt, 14 + msgLength);
     }
 
+    public void sendRequest(int deviceID, String message, int msgLength)
+    {       
+        sendRequest(deviceID, message.getBytes(), msgLength);
+    }
 }
