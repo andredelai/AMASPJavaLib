@@ -390,41 +390,23 @@ public abstract class AMASPSerial
         lrc = (((lrc ^ 0xFFFF) + 1) & 0xFFFF);
         return lrc;
     }
-    
-    protected int CRC16(byte[] data, int dataLength)
-    {
-        int crc = 0x0000;
+         
+    protected short CRC16SerialModbus(byte[] data, int dataLength) {
+        short crc = (short) 0xFFFF;
+        for (int pos = 0; pos < dataLength; pos++) {
+            crc ^= (short) data[pos];          // XOR byte into least sig. byte of crc
 
-            for (int i = 0; i < dataLength; i++)
+            for (int i = 8; i != 0; i--) // Loop over each bit
             {
-                crc = crc16_DNP(crc, data[i]);
-            }
-            
-            return (~crc);
-    }
-    
-    private int crc16_DNP(int crcValue,  byte newByte) // DNP, IEC 870, M-BUS, wM-BUS, ...
-        {
-            int i;
-
-            final int POLY = 0x3D65;
-
-            for (i = 0; i < 8; i++)
-            {
-
-                if ((((crcValue & 0x8000) >> 8) ^ (newByte & 0x80)) != 0)
+                crc >>= 1;
+                if ((crc & 0x0001) != 0) // If the LSB is set
                 {
-                    crcValue = (crcValue << 1) ^ POLY;
+                    crc ^= 0xA001;
                 }
-                else
-                {
-                    crcValue = (crcValue << 1);
-                }
-
-                newByte <<= 1;
             }
-
-            return crcValue;
         }
+        // Note, this number has low and high bytes swapped, so use it accordingly (or swap bytes)
+        return crc;
+    }
 
 }
