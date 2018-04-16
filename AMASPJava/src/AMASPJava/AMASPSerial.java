@@ -401,7 +401,7 @@ public abstract class AMASPSerial
                 crc >>= 1;
                 if ((crc & 0x0001) != 0) // If the LSB is set
                 {
-                    crc ^= 0xA001;
+                    crc ^= 0xA001; // Polynomial
                 }
             }
         }
