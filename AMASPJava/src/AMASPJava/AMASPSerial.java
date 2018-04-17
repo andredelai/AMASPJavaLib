@@ -167,7 +167,7 @@ public abstract class AMASPSerial
         pkt[5] = (byte) hex[0];
         pkt[6] = (byte) hex[1];
         //LRC
-        hex = String.format("%1$04X", LRC(pkt, 7)).getBytes();
+        hex = String.format("%1$04X", CRC16SerialModbus(pkt, 7)).getBytes();
         pkt[7] = (byte) hex[0];
         pkt[8] = (byte) hex[1];
         pkt[9] = (byte) hex[2];
@@ -243,7 +243,7 @@ public abstract class AMASPSerial
                                         System.arraycopy(auxBuf, 0, buffer, 8, pktData.getCodeLength() + 6);
                                         aux = Integer.parseInt(new String(Arrays.copyOfRange(buffer, pktData.getCodeLength() + 8, pktData.getCodeLength() + 12)), 16);
                                         //LRC checking
-                                        if (aux == LRC(buffer, pktData.getCodeLength() + 8))
+                                        if (aux == CRC16SerialModbus(buffer, pktData.getCodeLength() + 8))
                                         {
                                             //End chars checking
                                             if (buffer[pktData.getCodeLength() + 12] == '\r' || buffer[pktData.getCodeLength() + 13] == '\n')
@@ -289,7 +289,7 @@ public abstract class AMASPSerial
                                         System.arraycopy(auxBuf, 0, buffer, 8, pktData.getCodeLength() + 6);
                                         aux = Integer.parseInt(new String(Arrays.copyOfRange(buffer, pktData.getCodeLength() + 8, pktData.getCodeLength() + 12)), 16);
                                         //LRC checking
-                                        if (aux == LRC(buffer, pktData.getCodeLength() + 8))
+                                        if (aux == CRC16SerialModbus(buffer, pktData.getCodeLength() + 8))
                                         {
                                             //End chars checking
                                             if (buffer[pktData.getCodeLength() + 12] == '\r' || buffer[pktData.getCodeLength() + 13] == '\n')
@@ -317,7 +317,7 @@ public abstract class AMASPSerial
                                 {
                                     System.arraycopy(auxBuf, 0, buffer, 2, 13);
                                     aux = Integer.parseInt(new String(Arrays.copyOfRange(buffer, 7, pktData.getCodeLength() + 11)), 16);
-                                    if (aux == LRC(buffer, 7))
+                                    if (aux == CRC16SerialModbus(buffer, 7))
                                     {
                                         //Extracting device ID
                                         //String straux = new String(Arrays.copyOfRange(buffer, 2, 5));
@@ -345,7 +345,7 @@ public abstract class AMASPSerial
                                 {
                                     System.arraycopy(auxBuf, 0, buffer, 2, 13);
                                     aux = Integer.parseInt(new String(Arrays.copyOfRange(buffer, 7, pktData.getCodeLength() + 11)), 16);
-                                    if (aux == LRC(buffer, 7))
+                                    if (aux == CRC16SerialModbus(buffer, 7))
                                     {
                                         //Extracting device ID
                                         //String straux = new String(Arrays.copyOfRange(buffer, 2, 5));
