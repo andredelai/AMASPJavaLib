@@ -398,7 +398,8 @@ public abstract class AMASPSerial
 
             for (int i = 8; i != 0; i--) // Loop over each bit
             {
-                crc >>= 1;
+                crc >>>= 1;
+                crc &= 0x7FFF; 
                 if ((crc & 0x0001) != 0) // If the LSB is set
                 {
                     crc ^= 0xA001; // Polynomial
