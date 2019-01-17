@@ -380,16 +380,7 @@ public abstract class AMASPSerial
      * @param dataLength Data length.
      * @return the calculated LRC.
      */
-    protected int LRC(byte[] data, int dataLength)
-    {
-        int lrc = 0;
-        for (int i = 0; i < dataLength; i++)
-        {
-            lrc = (lrc + data[i]) & 0xFFFF;
-        }
-        lrc = (((lrc ^ 0xFFFF) + 1) & 0xFFFF);
-        return lrc;
-    }
+    
          
     protected short CRC16SerialModbus(byte[] data, int dataLength) {
         short crc = (short) 0xFFFF;
@@ -408,6 +399,87 @@ public abstract class AMASPSerial
         }
         // Note, this number has low and high bytes swapped, so use it accordingly (or swap bytes)
         return crc;
+    }
+    
+    protected int LRC16Check(byte[] data, int dataLength) {
+        int lrc = 0;
+        for (int i = 0; i < dataLength; i++) {
+            lrc = (lrc + data[i]) & 0xFFFF;
+        }
+        lrc = (((lrc ^ 0xFFFF) + 1) & 0xFFFF);
+        return lrc;
+    }
+
+    protected int XORCheck(byte[] data, int dataLength) {
+        int xorCheck = 0;
+        for (int i = 0; i < dataLength; i++) {
+            xorCheck ^= data[i];
+        }
+        return xorCheck;
+    }
+
+    //Classical checksum
+    protected int checksum16Check(byte[] message, int dataLength) {
+        int sum = 0;
+        for (int i = 0; i < dataLength; i++) {
+            sum += message[i];
+        }
+        return sum;
+    }
+
+    int fletcher16Checksum(byte[] data, int dataLength) {
+        int c0, c1;
+        int i, idx;
+
+        idx = 0;
+        for (c0 = c1 = 0; dataLength >= 5802; dataLength -= 5802) {
+            for (i = 0; i < 5802; ++i) {
+                c0 = c0 + data[idx];
+                idx++;
+                c1 = c1 + c0;
+            }
+            c0 = c0 % 255;
+            c1 = c1 % 255;
+        }
+        idx = 0;
+        for (i = 0; i < dataLength; ++i) {
+            c0 = c0 + data[idx];
+            c1 = c1 + c0;
+        }
+        c0 = c0 % 255;
+        c1 = c1 % 255;
+        return (c1 << 8 | c0);
+    }
+
+    protected int errorCheck(byte[] data, int dataLength, int errorCheckAlg) 
+    {
+        int ret;
+        switch (errorCheckAlg) {
+            case 1:
+                ret = XORCheck(data, dataLength + 8);
+                break;
+
+            case 2:
+                ret = checksum16Check(data, dataLength + 8);
+                break;
+
+            case 3:
+                ret = LRC16Check(data, dataLength + 8);
+                break;
+
+            case 4:
+                ret = fletcher16Checksum(data, dataLength + 8);
+                break;
+
+            case 5:
+                ret = CRC16SerialModbus(data, dataLength + 8);
+                break;
+
+            default:
+                ret = 0x00;
+                break;
+        }
+        return ret;
     }
 
 }
