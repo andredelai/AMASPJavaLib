@@ -50,7 +50,7 @@ public class AMASPSerialSlave extends AMASPSerial
             pkt[8 + i] = (byte) message[i];
         }
         //CRC       
-        hex = String.format("%1$03X", CRC16SerialModbus(pkt, msgLength + 8)).getBytes();
+        hex = String.format("%1$03X", errorCheck(pkt, msgLength + 8)).getBytes();
         pkt[8 + msgLength] = (byte) hex[0];
         pkt[8 + msgLength + 1] = (byte) hex[1];
         pkt[8 + msgLength + 2] = (byte) hex[2];
@@ -97,7 +97,7 @@ public class AMASPSerialSlave extends AMASPSerial
         pkt[5] = (byte) hex[0];
         pkt[6] = (byte) hex[1];
         //CRC
-        hex = String.format("%1$04X", CRC16SerialModbus(pkt, 7)).getBytes();
+        hex = String.format("%1$04X", errorCheck(pkt, 7)).getBytes();
         pkt[7] = (byte) hex[0];
         pkt[8] = (byte) hex[1];
         pkt[9] = (byte) hex[2];
