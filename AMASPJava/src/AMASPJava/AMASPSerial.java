@@ -163,31 +163,34 @@ public abstract class AMASPSerial {
      */
     public void sendError(int deviceID, int errorCode) {
         byte[] hex;
-        byte[] pkt = new byte[13];
+        byte[] pkt = new byte[14];
 
         //Packet Type
         pkt[0] = (byte) '!';
         pkt[1] = (byte) '~';
+        //ECA
+        hex = String.format("%1$01X", errorCheckType.ordinal()).getBytes();
+        pkt[2] = (byte)hex[0];
         //Device ID
         hex = String.format("%1$03X", deviceID).getBytes();
-        pkt[2] = (byte) hex[0];
-        pkt[3] = (byte) hex[1];
-        pkt[4] = (byte) hex[2];
+        pkt[3] = (byte) hex[0];
+        pkt[4] = (byte) hex[1];
+        pkt[5] = (byte) hex[2];
         //Error Code       
         hex = String.format("%1$02X", errorCode).getBytes();
-        pkt[5] = (byte) hex[0];
-        pkt[6] = (byte) hex[1];
+        pkt[6] = (byte) hex[0];
+        pkt[7] = (byte) hex[1];
         //LRC
         hex = String.format("%1$04X", errorCheck(pkt, 7)).getBytes();
-        pkt[7] = (byte) hex[0];
-        pkt[8] = (byte) hex[1];
-        pkt[9] = (byte) hex[2];
-        pkt[10] = (byte) hex[3];
+        pkt[8] = (byte) hex[0];
+        pkt[9] = (byte) hex[1];
+        pkt[10] = (byte) hex[2];
+        pkt[11] = (byte) hex[3];
         //Packet End
-        pkt[11] = (byte) '\r';
-        pkt[12] = (byte) '\n';
+        pkt[12] = (byte) '\r';
+        pkt[13] = (byte) '\n';
 
-        serialCom.writeBytes(pkt, 13);
+        serialCom.writeBytes(pkt, 14);
     }
 
     /**
@@ -200,7 +203,7 @@ public abstract class AMASPSerial {
         PacketData pktData = new PacketData();
 
         byte[] buffer = new byte[PKTMAXSIZE];
-        byte[] auxBuf = new byte[PKTMAXSIZE - 8];
+        byte[] auxBuf = new byte[PKTMAXSIZE - 9];
         int aux;
         double milisecPerByte = 1 / ((double) serialCom.getBaudRate() / 8000);
 
