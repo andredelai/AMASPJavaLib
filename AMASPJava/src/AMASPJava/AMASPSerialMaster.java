@@ -52,11 +52,12 @@ public class AMASPSerialMaster extends AMASPSerial
             pkt[9 + i] = (byte) message[i];
         }
         //CRC       
-        hex = String.format("%1$03X", errorCheck(pkt, msgLength + 9)).getBytes();
-        pkt[9 + msgLength] = (byte) hex[0];
-        pkt[9 + msgLength + 1] = (byte) hex[1];
-        pkt[9 + msgLength + 2] = (byte) hex[2];
-        pkt[9 + msgLength + 3] = (byte) hex[3];
+        errorCheck(pkt, msgLength + 9);
+        hex = String.format("%1$04X", errorCheck(pkt, msgLength + 9)).getBytes();
+        pkt[9 + msgLength] = (byte) hex[3];
+        pkt[9 + msgLength + 1] = (byte) hex[2];
+        pkt[9 + msgLength + 2] = (byte) hex[1];
+        pkt[9 + msgLength + 3] = (byte) hex[0];
         //Packet End
         pkt[9 + msgLength + 4] = (byte) '\r';
         pkt[9 + msgLength + 5] = (byte) '\n';

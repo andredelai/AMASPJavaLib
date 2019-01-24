@@ -399,11 +399,11 @@ public abstract class AMASPSerial {
     }
 
     protected int XORCheck(byte[] data, int dataLength) {
-        int xorCheck = 0;
+        byte xorCheck = 0;
         for (int i = 0; i < dataLength; i++) {
             xorCheck ^= data[i];
         }
-        return xorCheck;
+        return (int)xorCheck;
     }
 
     //Classical checksum
@@ -443,23 +443,23 @@ public abstract class AMASPSerial {
         int ret;
         switch (errorCheckType) {
             case XOR8:
-                ret = XORCheck(data, dataLength + 8);
+                ret = XORCheck(data, dataLength);
                 break;
 
             case checksum16:
-                ret = checksum16Check(data, dataLength + 8);
+                ret = checksum16Check(data, dataLength);
                 break;
 
             case LRC16:
-                ret = LRC16Check(data, dataLength + 8);
+                ret = LRC16Check(data, dataLength);
                 break;
 
             case fletcher16:
-                ret = fletcher16Checksum(data, dataLength + 8);
+                ret = fletcher16Checksum(data, dataLength);
                 break;
 
             case CRC16:
-                ret = CRC16SerialModbus(data, dataLength + 8);
+                ret = CRC16SerialModbus(data, dataLength);
                 break;
 
             default:
