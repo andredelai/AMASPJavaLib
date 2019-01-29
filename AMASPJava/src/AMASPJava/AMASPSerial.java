@@ -363,17 +363,11 @@ public abstract class AMASPSerial {
         return pktData;
     }
 
-    /**
-     * Calculates the LRC (Longitudinal Reduncancy Check).
-     *
-     * @param data Bytes to calculate the LRC.
-     * @param dataLength Data length.
-     * @return the calculated LRC.
-     */
-    protected short CRC16SerialModbus(byte[] data, int dataLength) {
+    
+    protected short CRC16Check(byte[] data, int dataLength) {
         short crc = (short) 0xFFFF;
         for (int pos = 0; pos < dataLength; pos++) {
-            crc ^= (short) data[pos];          // XOR byte into least sig. byte of crc
+            crc ^=  data[pos];          // XOR byte into least sig. byte of crc
 
             for (int i = 8; i != 0; i--) // Loop over each bit
             {
@@ -414,29 +408,19 @@ public abstract class AMASPSerial {
         }
         return sum;
     }
+    
+    
+    protected int fletcher16Checksum(byte[] data, int dataLength) {
+        
+        int sum1 = 0, sum2 = 0, index;
 
-    int fletcher16Checksum(byte[] data, int dataLength) {
-        int c0, c1;
-        int i, idx;
+        for (index = 0; index < dataLength; ++index) {
+            sum1 = (sum1 + data[index]) % 255;
+            sum2 = (sum2 + sum1) % 255;
+        }
 
-        idx = 0;
-        for (c0 = c1 = 0; dataLength >= 5802; dataLength -= 5802) {
-            for (i = 0; i < 5802; ++i) {
-                c0 = c0 + data[idx];
-                idx++;
-                c1 = c1 + c0;
-            }
-            c0 = c0 % 255;
-            c1 = c1 % 255;
-        }
-        idx = 0;
-        for (i = 0; i < dataLength; ++i) {
-            c0 = c0 + data[idx];
-            c1 = c1 + c0;
-        }
-        c0 = c0 % 255;
-        c1 = c1 % 255;
-        return (c1 << 8 | c0);
+        return (sum2 << 8) | sum1;
+        
     }
 
     protected int errorCheck(byte[] data, int dataLength) {
@@ -459,7 +443,7 @@ public abstract class AMASPSerial {
                 break;
 
             case CRC16:
-                ret = CRC16SerialModbus(data, dataLength);
+                ret = CRC16Check(data, dataLength);
                 break;
 
             default:
