@@ -31,7 +31,7 @@ public abstract class AMASPSerial {
             this.typeValue = typeValue;
         }
 
-        public int getValor() {
+        public int getValue() {
             return typeValue;
         }
     }
@@ -43,8 +43,17 @@ public abstract class AMASPSerial {
         ErrorCheckType(int echeckValue) {
             this.echeckValue = echeckValue;
         }
-
-        public int getValor() {
+        
+        static ErrorCheckType fromValue(int value) {
+            for (ErrorCheckType my : ErrorCheckType.values()) {
+                if (my.echeckValue == value) {
+                    return my;
+                }
+            }
+            return null;
+        }
+        
+        public int getValue() {
             return echeckValue;
         }
     }
@@ -181,7 +190,7 @@ public abstract class AMASPSerial {
         pkt[6] = (byte) hex[0];
         pkt[7] = (byte) hex[1];
         //LRC
-        hex = String.format("%1$04X", errorCheck(pkt, 7)).getBytes();
+        hex = String.format("%1$04X", errorCheck(pkt, 7, getErrorCheckType())).getBytes();
         pkt[8] = (byte) hex[0];
         pkt[9] = (byte) hex[1];
         pkt[10] = (byte) hex[2];
@@ -205,6 +214,7 @@ public abstract class AMASPSerial {
         byte[] buffer = new byte[PKTMAXSIZE];
         byte[] auxBuf = new byte[PKTMAXSIZE - 9];
         int aux;
+        ErrorCheckType eCheck;
         double milisecPerByte = 1 / ((double) serialCom.getBaudRate() / 8000);
 
         pktData.setType(PacketType.Timeout);
@@ -222,14 +232,24 @@ public abstract class AMASPSerial {
 
                             //MRP packet
                             case (byte) '?':
-                                //Reading device ID and msg length
+                                //Reading error check type, device ID and msg length
                                 aux = 0;
                                 while (serialCom.bytesAvailable() < 6 && aux <= serialCom.getReadTimeout()) {
                                     aux++;
                                     Thread.currentThread().sleep(1);
                                 }
-                                if (serialCom.readBytes(auxBuf, 6) == 6) {
-                                    System.arraycopy(auxBuf, 0, buffer, 2, 6);
+                                if (serialCom.readBytes(auxBuf, 7) == 7) {
+                                    System.arraycopy(auxBuf, 0, buffer, 2, 7);
+                                    
+                                    //Extracting error check type
+                                    aux = Integer.parseInt(new String(Arrays.copyOfRange(buffer, 2, 2)), 16);
+                                    if(aux > errorCheckType.CRC16.getValue())
+                                    {
+                                        pktData.type = PacketType.Timeout;
+                                        return pktData;
+                                    }
+                                    eCheck = errorCheckType.fromValue(aux);
+                                    
                                     //Extracting device ID
 
                                     //String straux = new String(Arrays.copyOfRange(buffer, 2, 5));
@@ -238,7 +258,7 @@ public abstract class AMASPSerial {
                                     //Extracting message length
                                     pktData.setCodeLength(Integer.parseInt(new String(Arrays.copyOfRange(buffer, 5, 8)), 16));
 
-                                    //Reading message, LRC and end packet chars
+                                    //Reading message, error check data and end packet chars
                                     aux = 0;
                                     while (serialCom.bytesAvailable() < (pktData.getCodeLength()) + 6 && aux <= serialCom.getReadTimeout()) {
                                         aux++;
@@ -247,8 +267,8 @@ public abstract class AMASPSerial {
                                     if (serialCom.readBytes(auxBuf, pktData.getCodeLength() + 6) == pktData.getCodeLength() + 6) {
                                         System.arraycopy(auxBuf, 0, buffer, 8, pktData.getCodeLength() + 6);
                                         aux = Integer.parseInt(new String(Arrays.copyOfRange(buffer, pktData.getCodeLength() + 8, pktData.getCodeLength() + 12)), 16);
-                                        //LRC checking
-                                        if (aux == errorCheck(buffer, pktData.getCodeLength() + 8)) {
+                                        //checking for errors
+                                        if (aux == errorCheck(buffer, pktData.getCodeLength() + 8, eCheck)) {
                                             //End chars checking
                                             if (buffer[pktData.getCodeLength() + 12] == '\r' || buffer[pktData.getCodeLength() + 13] == '\n') {
                                                 //Extracting message
@@ -288,7 +308,7 @@ public abstract class AMASPSerial {
                                         System.arraycopy(auxBuf, 0, buffer, 8, pktData.getCodeLength() + 6);
                                         aux = Integer.parseInt(new String(Arrays.copyOfRange(buffer, pktData.getCodeLength() + 8, pktData.getCodeLength() + 12)), 16);
                                         //LRC checking
-                                        if (aux == errorCheck(buffer, pktData.getCodeLength() + 8)) {
+                                        if (aux == errorCheck(buffer, pktData.getCodeLength() + 8, getErrorCheckType())) {
                                             //End chars checking
                                             if (buffer[pktData.getCodeLength() + 12] == '\r' || buffer[pktData.getCodeLength() + 13] == '\n') {
                                                 //Extracting message
@@ -312,7 +332,7 @@ public abstract class AMASPSerial {
                                 if (serialCom.readBytes(auxBuf, 11) == 11) {
                                     System.arraycopy(auxBuf, 0, buffer, 2, 13);
                                     aux = Integer.parseInt(new String(Arrays.copyOfRange(buffer, 7, pktData.getCodeLength() + 11)), 16);
-                                    if (aux == errorCheck(buffer, 7)) {
+                                    if (aux == errorCheck(buffer, 7, getErrorCheckType())) {
                                         //Extracting device ID
                                         //String straux = new String(Arrays.copyOfRange(buffer, 2, 5));
                                         pktData.setDeviceId(Integer.parseInt(new String(Arrays.copyOfRange(buffer, 2, 5)), 16));
@@ -337,7 +357,7 @@ public abstract class AMASPSerial {
                                 if (serialCom.readBytes(auxBuf, 11) == 11) {
                                     System.arraycopy(auxBuf, 0, buffer, 2, 13);
                                     aux = Integer.parseInt(new String(Arrays.copyOfRange(buffer, 7, pktData.getCodeLength() + 11)), 16);
-                                    if (aux == errorCheck(buffer, 7)) {
+                                    if (aux == errorCheck(buffer, 7, getErrorCheckType())) {
                                         //Extracting device ID
                                         //String straux = new String(Arrays.copyOfRange(buffer, 2, 5));
                                         pktData.setDeviceId(Integer.parseInt(new String(Arrays.copyOfRange(buffer, 2, 5)), 16));
@@ -367,15 +387,20 @@ public abstract class AMASPSerial {
     protected short CRC16Check(byte[] data, int dataLength) {
         short crc = (short) 0xFFFF;
         for (int pos = 0; pos < dataLength; pos++) {
-            crc ^=  data[pos];          // XOR byte into least sig. byte of crc
+            crc ^=  (short)data[pos];          // XOR byte into least sig. byte of crc
 
             for (int i = 8; i != 0; i--) // Loop over each bit
-            {
-                crc >>>= 1;
-                crc &= 0x7FFF;
+            {                                 
                 if ((crc & 0x0001) != 0) // If the LSB is set
                 {
+                    crc >>>= 1;
+                    crc&= 0x7FFF;
                     crc ^= 0xA001; // Polynomial
+                }
+                else
+                {
+                    crc >>>= 1;
+                    crc&= 0x7FFF;
                 }
             }
         }
@@ -423,9 +448,9 @@ public abstract class AMASPSerial {
         
     }
 
-    protected int errorCheck(byte[] data, int dataLength) {
+    protected int errorCheck(byte[] data, int dataLength, ErrorCheckType eCheckType) {
         int ret;
-        switch (errorCheckType) {
+        switch (eCheckType) {
             case XOR8:
                 ret = XORCheck(data, dataLength);
                 break;
