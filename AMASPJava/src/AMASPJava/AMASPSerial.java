@@ -114,7 +114,15 @@ public abstract class AMASPSerial {
         public void setMessage(byte[] message) {
             this.message = message;
         }
-
+        
+        /**
+         * @return the errorCheckType
+         */
+        public ErrorCheckType getErrorCheckType()
+        {
+            return errorCheckType;
+        }
+        
         /**
          * @return the codeLength
          */
@@ -132,10 +140,11 @@ public abstract class AMASPSerial {
         private int deviceId;
         private byte[] message;
         private int codeLength;
+        private ErrorCheckType errorCheckType;
     }
 
     public final int MSGMAXSIZE = 4096;
-    private final int PKTMAXSIZE = MSGMAXSIZE + 14;
+    private final int PKTMAXSIZE = MSGMAXSIZE + 15;
 
     SerialPort serialCom;
 
@@ -225,9 +234,17 @@ public abstract class AMASPSerial {
         try {
             while (serialCom.readBytes(buffer, 1) > 0) {
                 if (buffer[0] == '!') {
-                    //Reading packet type
-                    if (serialCom.readBytes(auxBuf, 1) == 1) {
-                        buffer[1] = auxBuf[0];
+                    //Reading packet type and crc check type
+                    if (serialCom.readBytes(auxBuf, 2) == 2) {
+                        buffer[1] = auxBuf[0];//pkt type byte
+                        buffer[2] = auxBuf[1];//error check type byte
+                        //Pre-check of ECA value
+                        if (buffer[2] < '0' || buffer[2] > '5')
+                        {
+                            //ECA no identified (ignore the packet) 
+                            pktData.type = PacketType.Timeout;
+                             return pktData;
+                        }
                         switch (buffer[1]) {
 
                             //MRP packet
@@ -238,48 +255,44 @@ public abstract class AMASPSerial {
                                     aux++;
                                     Thread.currentThread().sleep(1);
                                 }
-                                if (serialCom.readBytes(auxBuf, 7) == 7) {
+                                if (serialCom.readBytes(auxBuf, 6) == 6) {
                                     System.arraycopy(auxBuf, 0, buffer, 2, 7);
                                     
                                     //Extracting error check type
-                                    aux = Integer.parseInt(new String(Arrays.copyOfRange(buffer, 2, 2)), 16);
-                                    if(aux > errorCheckType.CRC16.getValue())
-                                    {
-                                        pktData.type = PacketType.Timeout;
-                                        return pktData;
-                                    }
+                                    aux = buffer[2] - '0';                                   
                                     eCheck = errorCheckType.fromValue(aux);
                                     
                                     //Extracting device ID
-
                                     //String straux = new String(Arrays.copyOfRange(buffer, 2, 5));
-                                    pktData.setDeviceId(Integer.parseInt(new String(Arrays.copyOfRange(buffer, 2, 5)), 16));
+                                    pktData.setDeviceId(Integer.parseInt(new String(Arrays.copyOfRange(buffer, 3, 5)), 16));
 
                                     //Extracting message length
-                                    pktData.setCodeLength(Integer.parseInt(new String(Arrays.copyOfRange(buffer, 5, 8)), 16));
+                                    pktData.setCodeLength(Integer.parseInt(new String(Arrays.copyOfRange(buffer, 6, 8)), 16));
 
                                     //Reading message, error check data and end packet chars
                                     aux = 0;
-                                    while (serialCom.bytesAvailable() < (pktData.getCodeLength()) + 6 && aux <= serialCom.getReadTimeout()) {
+                                    while (serialCom.bytesAvailable() <= (pktData.getCodeLength()) + 6 && aux <= serialCom.getReadTimeout()) {
                                         aux++;
                                         Thread.currentThread().sleep(1);
                                     }
                                     if (serialCom.readBytes(auxBuf, pktData.getCodeLength() + 6) == pktData.getCodeLength() + 6) {
-                                        System.arraycopy(auxBuf, 0, buffer, 8, pktData.getCodeLength() + 6);
-                                        aux = Integer.parseInt(new String(Arrays.copyOfRange(buffer, pktData.getCodeLength() + 8, pktData.getCodeLength() + 12)), 16);
+                                        System.arraycopy(auxBuf, 0, buffer, 9, pktData.getCodeLength() + 6);
+                                        aux = Integer.parseInt(new String(Arrays.copyOfRange(buffer, pktData.getCodeLength() + 9, pktData.getCodeLength() + 13)), 16);
                                         //checking for errors
                                         if (aux == errorCheck(buffer, pktData.getCodeLength() + 8, eCheck)) {
                                             //End chars checking
-                                            if (buffer[pktData.getCodeLength() + 12] == '\r' || buffer[pktData.getCodeLength() + 13] == '\n') {
+                                            if (buffer[pktData.getCodeLength() + 13] == '\r' || buffer[pktData.getCodeLength() + 14] == '\n') {
                                                 //Extracting message
                                                 pktData.setMessage(new byte[pktData.getCodeLength()]);
-                                                System.arraycopy(buffer, 8, pktData.getMessage(), 0, pktData.getCodeLength());
+                                                System.arraycopy(buffer, 9, pktData.getMessage(), 0, pktData.getCodeLength());
                                                 pktData.setType(PacketType.MRP); //MRP recognized
+                                                pktData.errorCheckType = eCheck;
+                                                return pktData;
                                             }
                                         }
                                     }
                                 }
-
+                            break;
                             //SRP packet
                             case (byte) '#':
                                 //Reading device ID and msg length
@@ -320,7 +333,7 @@ public abstract class AMASPSerial {
                                         }
                                     }
                                 }
-
+                            break;
                             //CEP packet
                             case (byte) '~':
                                 //Reading device ID and msg length
