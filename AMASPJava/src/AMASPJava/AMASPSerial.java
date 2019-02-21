@@ -249,7 +249,7 @@ public abstract class AMASPSerial {
                                     Thread.currentThread().sleep(1);
                                 }
                                 if (serialCom.readBytes(auxBuf, 3) == 3) {
-                                    System.arraycopy(auxBuf, 0, buffer, 3, 6);
+                                    System.arraycopy(auxBuf, 0, buffer, 6, 3);
                                                                         
                                     //Extracting message length
                                     pktData.codeLength = (Integer.parseInt(new String(Arrays.copyOfRange(buffer, 6, 9)), 16));
@@ -287,7 +287,7 @@ public abstract class AMASPSerial {
                                     Thread.currentThread().sleep(1);
                                 }
                                 if (serialCom.readBytes(auxBuf, 3) == 3) {
-                                    System.arraycopy(auxBuf, 0, buffer, 3, 6);
+                                    System.arraycopy(auxBuf, 0, buffer, 6, 3);
                                                                         
                                     //Extracting message length
                                     pktData.codeLength = (Integer.parseInt(new String(Arrays.copyOfRange(buffer, 6, 9)), 16));
