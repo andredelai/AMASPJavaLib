@@ -172,7 +172,7 @@ public abstract class AMASPSerial {
         pkt[6] = (byte) hex[0];
         pkt[7] = (byte) hex[1];
         //LRC
-        hex = String.format("%1$04X", errorCheck(pkt, 7, getErrorCheckType())).getBytes();
+        hex = String.format("%1$04X", errorCheck(pkt, 8, getErrorCheckType())).getBytes();
         pkt[8] = (byte) hex[0];
         pkt[9] = (byte) hex[1];
         pkt[10] = (byte) hex[2];

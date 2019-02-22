@@ -103,7 +103,7 @@ public class AMASPSerialSlave extends AMASPSerial
         pkt[6] = (byte) hex[0];
         pkt[7] = (byte) hex[1];
         //CRC
-        hex = String.format("%1$04X", errorCheck(pkt, 7, getErrorCheckType())).getBytes();
+        hex = String.format("%1$04X", errorCheck(pkt, 8, getErrorCheckType())).getBytes();
         pkt[8] = (byte) hex[0];
         pkt[9] = (byte) hex[1];
         pkt[10] = (byte) hex[2];
@@ -111,6 +111,8 @@ public class AMASPSerialSlave extends AMASPSerial
         //Packet End
         pkt[12] = (byte) '\r';
         pkt[13] = (byte) '\n';
+        
+        serialCom.writeBytes(pkt, 14);
     }
 
 }
