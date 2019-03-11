@@ -1,8 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/*    
+  Created by Andre L. Delai.
+
+  This is a free software; you can redistribute it and/or
+  modify it under the terms of the GNU Lesser General Public
+  License as published by the Free Software Foundation; either
+  version 2.1 of the License, or (at your option) any later version.
+
+  This library is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+  Lesser General Public License for more details.
+
+  You should have received a copy of the GNU Lesser General Public
+  License along with this library; if not, write to the Free Software
+  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+*/
 package AMASPJava;
 
 import com.fazecast.jSerialComm.SerialPort;
@@ -22,6 +34,7 @@ public abstract class AMASPSerial {
     /**
      * Enumeration to the packet types available in AMASP and the Timeout
      * condition.
+     * MRP(0), SRP(1), SIP(2), CEP(3), Timeout(4).
      */
     public enum PacketType {
         MRP(0), SRP(1), SIP(2), CEP(3), Timeout(4);
@@ -36,6 +49,11 @@ public abstract class AMASPSerial {
         }
     }
 
+    
+    /**
+     * Enumeration to the error checking algorithms available in AMASP.
+     * None(0), XOR8(1), checksum16(2), LRC16(3), fletcher16(4), CRC16(5).
+     */
     public enum ErrorCheckType {
         None(0), XOR8(1), checksum16(2), LRC16(3), fletcher16(4), CRC16(5);
         final private int echeckValue;
@@ -58,18 +76,28 @@ public abstract class AMASPSerial {
         }
     }
     
+    /**
+     * Sets the error checking algorithm to be used in the sent packets.
+     *
+     * @param errorCheckType The error checking algorithm.
+     */
     public void setErrorCheckType(ErrorCheckType errorCheckType)
     {
         this.errorCheckType = errorCheckType;
     }
     
+    /**
+     * Gets the current error checking algorithm to be used in the sent packets.
+     *
+     * @return The current error checking algorithm.
+     */
     public ErrorCheckType getErrorCheckType()
     {
         return errorCheckType;
     }
         
     /**
-     * Store the information and the data from a packet.
+     * Store the data and metadata of the packet.
      */
     public class PacketData {
 
@@ -122,7 +150,7 @@ public abstract class AMASPSerial {
     SerialPort serialCom;
 
     /**
-     * Stablish a serial connection.
+     * Establishes a serial connection.
      *
      * @param serialCom A JSerialComm object to serial communication.
      * @return True if the serial connection was stablished or false if not.
@@ -150,7 +178,7 @@ public abstract class AMASPSerial {
      * Send a CEP packet (Communication Error Packet).
      *
      * @param deviceID Id of the target device in communication.
-     * @param errorCode The communication error code.
+     * @param errorCode The communication error code (0 to 255).
      */
     public void sendError(int deviceID, int errorCode) {
         byte[] hex;

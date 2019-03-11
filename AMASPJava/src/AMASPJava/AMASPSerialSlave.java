@@ -1,8 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/*    
+  Created by Andre L. Delai.
+
+  This is a free software; you can redistribute it and/or
+  modify it under the terms of the GNU Lesser General Public
+  License as published by the Free Software Foundation; either
+  version 2.1 of the License, or (at your option) any later version.
+
+  This library is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+  Lesser General Public License for more details.
+
+  You should have received a copy of the GNU Lesser General Public
+  License along with this library; if not, write to the Free Software
+  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+*/
 package AMASPJava;
 
 /**
@@ -16,7 +28,7 @@ public class AMASPSerialSlave extends AMASPSerial
     /**
      * Send a SRP (Slave Response Packet) to a master computer.
      * @param deviceID Id of the slave device who answered. 
-     * @param message The response message to be send.
+     * @param message The response message (in bytes) to be send.
      * @param msgLength The message length.
      */
     public void sendResponse(int deviceID, byte[] message, int msgLength)
@@ -69,7 +81,7 @@ public class AMASPSerialSlave extends AMASPSerial
     /**
      * Send a SRP (Slave Response Packet) to a master computer.
      * @param deviceID Id of the slave device who answered. 
-     * @param message The response message to be send.
+     * @param message The response message (string format) to be send.
      * @param msgLength The message length.
      */
     public void sendResponse(int deviceID, String message, int msgLength)
@@ -80,7 +92,7 @@ public class AMASPSerialSlave extends AMASPSerial
     /**
      * Send a SIP (Slave Interrupt Packet). 
      * @param deviceID Id of the slave device who generated the interruption.
-     * @param InterrupCode The code of the interruption.
+     * @param InterrupCode The code of the interruption (0 to 255).
      */
     public void sendInterruption(int deviceID, int InterrupCode)
     {

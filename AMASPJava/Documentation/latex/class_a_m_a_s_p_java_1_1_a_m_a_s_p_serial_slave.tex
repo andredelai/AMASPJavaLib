@@ -1,0 +1,75 @@
+\hypertarget{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_slave}{}\section{A\+M\+A\+S\+P\+Java.\+A\+M\+A\+S\+P\+Serial\+Slave Class Reference}
+\label{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_slave}\index{A\+M\+A\+S\+P\+Java.\+A\+M\+A\+S\+P\+Serial\+Slave@{A\+M\+A\+S\+P\+Java.\+A\+M\+A\+S\+P\+Serial\+Slave}}
+Inheritance diagram for A\+M\+A\+S\+P\+Java.\+A\+M\+A\+S\+P\+Serial\+Slave\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_slave}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_slave_ac1a33dcf4cc36f5e98b6a212125152f1}{send\+Response} (int device\+ID, byte\mbox{[}$\,$\mbox{]} message, int msg\+Length)
+\item 
+void \hyperlink{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_slave_a4946c9cd7c4691d5d94096fe07d12619}{send\+Response} (int device\+ID, String message, int msg\+Length)
+\item 
+void \hyperlink{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_slave_aa6185a4c4745e701c2eee36dbc577a99}{send\+Interruption} (int device\+ID, int Interrup\+Code)
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A\+M\+A\+SP Slave class \begin{DoxyAuthor}{Author}
+delai 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_slave_aa6185a4c4745e701c2eee36dbc577a99}\label{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_slave_aa6185a4c4745e701c2eee36dbc577a99}} 
+\index{A\+M\+A\+S\+P\+Java\+::\+A\+M\+A\+S\+P\+Serial\+Slave@{A\+M\+A\+S\+P\+Java\+::\+A\+M\+A\+S\+P\+Serial\+Slave}!send\+Interruption@{send\+Interruption}}
+\index{send\+Interruption@{send\+Interruption}!A\+M\+A\+S\+P\+Java\+::\+A\+M\+A\+S\+P\+Serial\+Slave@{A\+M\+A\+S\+P\+Java\+::\+A\+M\+A\+S\+P\+Serial\+Slave}}
+\subsubsection{\texorpdfstring{send\+Interruption()}{sendInterruption()}}
+{\footnotesize\ttfamily void A\+M\+A\+S\+P\+Java.\+A\+M\+A\+S\+P\+Serial\+Slave.\+send\+Interruption (\begin{DoxyParamCaption}\item[{int}]{device\+ID,  }\item[{int}]{Interrup\+Code }\end{DoxyParamCaption})}
+
+Send a S\+IP (Slave Interrupt Packet). 
+\begin{DoxyParams}{Parameters}
+{\em device\+ID} & Id of the slave device who generated the interruption. \\
+\hline
+{\em Interrup\+Code} & The code of the interruption (0 to 255). \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_slave_ac1a33dcf4cc36f5e98b6a212125152f1}\label{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_slave_ac1a33dcf4cc36f5e98b6a212125152f1}} 
+\index{A\+M\+A\+S\+P\+Java\+::\+A\+M\+A\+S\+P\+Serial\+Slave@{A\+M\+A\+S\+P\+Java\+::\+A\+M\+A\+S\+P\+Serial\+Slave}!send\+Response@{send\+Response}}
+\index{send\+Response@{send\+Response}!A\+M\+A\+S\+P\+Java\+::\+A\+M\+A\+S\+P\+Serial\+Slave@{A\+M\+A\+S\+P\+Java\+::\+A\+M\+A\+S\+P\+Serial\+Slave}}
+\subsubsection{\texorpdfstring{send\+Response()}{sendResponse()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void A\+M\+A\+S\+P\+Java.\+A\+M\+A\+S\+P\+Serial\+Slave.\+send\+Response (\begin{DoxyParamCaption}\item[{int}]{device\+ID,  }\item[{byte \mbox{[}$\,$\mbox{]}}]{message,  }\item[{int}]{msg\+Length }\end{DoxyParamCaption})}
+
+Send a S\+RP (Slave Response Packet) to a master computer. 
+\begin{DoxyParams}{Parameters}
+{\em device\+ID} & Id of the slave device who answered. \\
+\hline
+{\em message} & The response message (in bytes) to be send. \\
+\hline
+{\em msg\+Length} & The message length. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_slave_a4946c9cd7c4691d5d94096fe07d12619}\label{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_slave_a4946c9cd7c4691d5d94096fe07d12619}} 
+\index{A\+M\+A\+S\+P\+Java\+::\+A\+M\+A\+S\+P\+Serial\+Slave@{A\+M\+A\+S\+P\+Java\+::\+A\+M\+A\+S\+P\+Serial\+Slave}!send\+Response@{send\+Response}}
+\index{send\+Response@{send\+Response}!A\+M\+A\+S\+P\+Java\+::\+A\+M\+A\+S\+P\+Serial\+Slave@{A\+M\+A\+S\+P\+Java\+::\+A\+M\+A\+S\+P\+Serial\+Slave}}
+\subsubsection{\texorpdfstring{send\+Response()}{sendResponse()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void A\+M\+A\+S\+P\+Java.\+A\+M\+A\+S\+P\+Serial\+Slave.\+send\+Response (\begin{DoxyParamCaption}\item[{int}]{device\+ID,  }\item[{String}]{message,  }\item[{int}]{msg\+Length }\end{DoxyParamCaption})}
+
+Send a S\+RP (Slave Response Packet) to a master computer. 
+\begin{DoxyParams}{Parameters}
+{\em device\+ID} & Id of the slave device who answered. \\
+\hline
+{\em message} & The response message (string format) to be send. \\
+\hline
+{\em msg\+Length} & The message length. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/aldelai/\+Documents/\+Repositorio/amaspjavalib/\+A\+M\+A\+S\+P\+Java/src/\+A\+M\+A\+S\+P\+Java/A\+M\+A\+S\+P\+Serial\+Slave.\+java\end{DoxyCompactItemize}

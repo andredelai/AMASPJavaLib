@@ -1,0 +1,147 @@
+\hypertarget{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial}{}\section{A\+M\+A\+S\+P\+Java.\+A\+M\+A\+S\+P\+Serial Class Reference}
+\label{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial}\index{A\+M\+A\+S\+P\+Java.\+A\+M\+A\+S\+P\+Serial@{A\+M\+A\+S\+P\+Java.\+A\+M\+A\+S\+P\+Serial}}
+Inheritance diagram for A\+M\+A\+S\+P\+Java.\+A\+M\+A\+S\+P\+Serial\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{enum_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_1_1_error_check_type}{Error\+Check\+Type}
+\item 
+class \hyperlink{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_1_1_packet_data}{Packet\+Data}
+\item 
+enum \hyperlink{enum_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_1_1_packet_type}{Packet\+Type}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_ac5c88aa9168fb1e962705a47f86c9f3d}{set\+Error\+Check\+Type} (\hyperlink{enum_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_1_1_error_check_type}{Error\+Check\+Type} error\+Check\+Type)
+\item 
+\hyperlink{enum_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_1_1_error_check_type}{Error\+Check\+Type} \hyperlink{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_abe2bbc035a6337e7b04ea9e6a0498ced}{get\+Error\+Check\+Type} ()
+\item 
+boolean \hyperlink{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_ae1706e1eae0bcc63b42229e70b3f8c04}{begin} (Serial\+Port serial\+Com)
+\item 
+void \hyperlink{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_a86f80b182b170fee48a6f13a3672c032}{end} ()
+\item 
+void \hyperlink{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_a33ea416e78a67d007dbe2ab9326205e6}{send\+Error} (int device\+ID, int error\+Code)
+\item 
+\hyperlink{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_1_1_packet_data}{Packet\+Data} \hyperlink{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_a0770b15ce35cf5a58ae6f1949c1588c9}{read\+Packet} ()
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_a9795622c94c823f551d2184ea3aa828c}\label{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_a9795622c94c823f551d2184ea3aa828c}} 
+final int {\bfseries M\+S\+G\+M\+A\+X\+S\+I\+ZE} = 4096
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_aaf3f716e38e188729ef100eb98cc7645}\label{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_aaf3f716e38e188729ef100eb98cc7645}} 
+short {\bfseries C\+R\+C16\+Check} (byte\mbox{[}$\,$\mbox{]} data, int data\+Length)
+\item 
+\mbox{\Hypertarget{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_a72d99f11d341894f00db3ec83a7ae1c4}\label{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_a72d99f11d341894f00db3ec83a7ae1c4}} 
+int {\bfseries L\+R\+C16\+Check} (byte\mbox{[}$\,$\mbox{]} data, int data\+Length)
+\item 
+\mbox{\Hypertarget{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_a103194de2441c8ff4e62bfbd003f1555}\label{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_a103194de2441c8ff4e62bfbd003f1555}} 
+int {\bfseries X\+O\+R\+Check} (byte\mbox{[}$\,$\mbox{]} data, int data\+Length)
+\item 
+\mbox{\Hypertarget{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_a445ac68f830d47a8ce8d72c27f83c05d}\label{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_a445ac68f830d47a8ce8d72c27f83c05d}} 
+int {\bfseries checksum16\+Check} (byte\mbox{[}$\,$\mbox{]} message, int data\+Length)
+\item 
+\mbox{\Hypertarget{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_a57e1d54c03292c4aff5bcf58b55bf776}\label{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_a57e1d54c03292c4aff5bcf58b55bf776}} 
+int {\bfseries fletcher16\+Checksum} (byte\mbox{[}$\,$\mbox{]} data, int data\+Length)
+\item 
+\mbox{\Hypertarget{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_a1f07c055ad8f6795df140a1a8f30030d}\label{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_a1f07c055ad8f6795df140a1a8f30030d}} 
+int {\bfseries error\+Check} (byte\mbox{[}$\,$\mbox{]} data, int data\+Length, \hyperlink{enum_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_1_1_error_check_type}{Error\+Check\+Type} e\+Check\+Type)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A\+M\+A\+SP Abstract class
+
+\begin{DoxyAuthor}{Author}
+Andre L. Delai 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_ae1706e1eae0bcc63b42229e70b3f8c04}\label{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_ae1706e1eae0bcc63b42229e70b3f8c04}} 
+\index{A\+M\+A\+S\+P\+Java\+::\+A\+M\+A\+S\+P\+Serial@{A\+M\+A\+S\+P\+Java\+::\+A\+M\+A\+S\+P\+Serial}!begin@{begin}}
+\index{begin@{begin}!A\+M\+A\+S\+P\+Java\+::\+A\+M\+A\+S\+P\+Serial@{A\+M\+A\+S\+P\+Java\+::\+A\+M\+A\+S\+P\+Serial}}
+\subsubsection{\texorpdfstring{begin()}{begin()}}
+{\footnotesize\ttfamily boolean A\+M\+A\+S\+P\+Java.\+A\+M\+A\+S\+P\+Serial.\+begin (\begin{DoxyParamCaption}\item[{Serial\+Port}]{serial\+Com }\end{DoxyParamCaption})}
+
+Establishes a serial connection.
+
+
+\begin{DoxyParams}{Parameters}
+{\em serial\+Com} & A J\+Serial\+Comm object to serial communication. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the serial connection was stablished or false if not. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_a86f80b182b170fee48a6f13a3672c032}\label{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_a86f80b182b170fee48a6f13a3672c032}} 
+\index{A\+M\+A\+S\+P\+Java\+::\+A\+M\+A\+S\+P\+Serial@{A\+M\+A\+S\+P\+Java\+::\+A\+M\+A\+S\+P\+Serial}!end@{end}}
+\index{end@{end}!A\+M\+A\+S\+P\+Java\+::\+A\+M\+A\+S\+P\+Serial@{A\+M\+A\+S\+P\+Java\+::\+A\+M\+A\+S\+P\+Serial}}
+\subsubsection{\texorpdfstring{end()}{end()}}
+{\footnotesize\ttfamily void A\+M\+A\+S\+P\+Java.\+A\+M\+A\+S\+P\+Serial.\+end (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Close the serial connection. \mbox{\Hypertarget{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_abe2bbc035a6337e7b04ea9e6a0498ced}\label{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_abe2bbc035a6337e7b04ea9e6a0498ced}} 
+\index{A\+M\+A\+S\+P\+Java\+::\+A\+M\+A\+S\+P\+Serial@{A\+M\+A\+S\+P\+Java\+::\+A\+M\+A\+S\+P\+Serial}!get\+Error\+Check\+Type@{get\+Error\+Check\+Type}}
+\index{get\+Error\+Check\+Type@{get\+Error\+Check\+Type}!A\+M\+A\+S\+P\+Java\+::\+A\+M\+A\+S\+P\+Serial@{A\+M\+A\+S\+P\+Java\+::\+A\+M\+A\+S\+P\+Serial}}
+\subsubsection{\texorpdfstring{get\+Error\+Check\+Type()}{getErrorCheckType()}}
+{\footnotesize\ttfamily \hyperlink{enum_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_1_1_error_check_type}{Error\+Check\+Type} A\+M\+A\+S\+P\+Java.\+A\+M\+A\+S\+P\+Serial.\+get\+Error\+Check\+Type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Gets the current error checking algorithm to be used in the sent packets.
+
+\begin{DoxyReturn}{Returns}
+The current error checking algorithm. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_a0770b15ce35cf5a58ae6f1949c1588c9}\label{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_a0770b15ce35cf5a58ae6f1949c1588c9}} 
+\index{A\+M\+A\+S\+P\+Java\+::\+A\+M\+A\+S\+P\+Serial@{A\+M\+A\+S\+P\+Java\+::\+A\+M\+A\+S\+P\+Serial}!read\+Packet@{read\+Packet}}
+\index{read\+Packet@{read\+Packet}!A\+M\+A\+S\+P\+Java\+::\+A\+M\+A\+S\+P\+Serial@{A\+M\+A\+S\+P\+Java\+::\+A\+M\+A\+S\+P\+Serial}}
+\subsubsection{\texorpdfstring{read\+Packet()}{readPacket()}}
+{\footnotesize\ttfamily \hyperlink{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_1_1_packet_data}{Packet\+Data} A\+M\+A\+S\+P\+Java.\+A\+M\+A\+S\+P\+Serial.\+read\+Packet (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Check if a valid packet is available and read it.
+
+\begin{DoxyReturn}{Returns}
+A \hyperlink{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_1_1_packet_data}{Packet\+Data} Object which contains the information and data from a packet. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_a33ea416e78a67d007dbe2ab9326205e6}\label{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_a33ea416e78a67d007dbe2ab9326205e6}} 
+\index{A\+M\+A\+S\+P\+Java\+::\+A\+M\+A\+S\+P\+Serial@{A\+M\+A\+S\+P\+Java\+::\+A\+M\+A\+S\+P\+Serial}!send\+Error@{send\+Error}}
+\index{send\+Error@{send\+Error}!A\+M\+A\+S\+P\+Java\+::\+A\+M\+A\+S\+P\+Serial@{A\+M\+A\+S\+P\+Java\+::\+A\+M\+A\+S\+P\+Serial}}
+\subsubsection{\texorpdfstring{send\+Error()}{sendError()}}
+{\footnotesize\ttfamily void A\+M\+A\+S\+P\+Java.\+A\+M\+A\+S\+P\+Serial.\+send\+Error (\begin{DoxyParamCaption}\item[{int}]{device\+ID,  }\item[{int}]{error\+Code }\end{DoxyParamCaption})}
+
+Send a C\+EP packet (Communication Error Packet).
+
+
+\begin{DoxyParams}{Parameters}
+{\em device\+ID} & Id of the target device in communication. \\
+\hline
+{\em error\+Code} & The communication error code (0 to 255). \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_ac5c88aa9168fb1e962705a47f86c9f3d}\label{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_ac5c88aa9168fb1e962705a47f86c9f3d}} 
+\index{A\+M\+A\+S\+P\+Java\+::\+A\+M\+A\+S\+P\+Serial@{A\+M\+A\+S\+P\+Java\+::\+A\+M\+A\+S\+P\+Serial}!set\+Error\+Check\+Type@{set\+Error\+Check\+Type}}
+\index{set\+Error\+Check\+Type@{set\+Error\+Check\+Type}!A\+M\+A\+S\+P\+Java\+::\+A\+M\+A\+S\+P\+Serial@{A\+M\+A\+S\+P\+Java\+::\+A\+M\+A\+S\+P\+Serial}}
+\subsubsection{\texorpdfstring{set\+Error\+Check\+Type()}{setErrorCheckType()}}
+{\footnotesize\ttfamily void A\+M\+A\+S\+P\+Java.\+A\+M\+A\+S\+P\+Serial.\+set\+Error\+Check\+Type (\begin{DoxyParamCaption}\item[{\hyperlink{enum_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_1_1_error_check_type}{Error\+Check\+Type}}]{error\+Check\+Type }\end{DoxyParamCaption})}
+
+Sets the error checking algorithm to be used in the sent packets.
+
+
+\begin{DoxyParams}{Parameters}
+{\em error\+Check\+Type} & The error checking algorithm. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/aldelai/\+Documents/\+Repositorio/amaspjavalib/\+A\+M\+A\+S\+P\+Java/src/\+A\+M\+A\+S\+P\+Java/A\+M\+A\+S\+P\+Serial.\+java\end{DoxyCompactItemize}
