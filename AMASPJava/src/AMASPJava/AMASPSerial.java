@@ -161,8 +161,13 @@ public abstract class AMASPSerial {
             if (!serialCom.openPort()) {
                 return false;
             }
+            return true;
         }
-        return true;
+        else
+        {
+            return false;
+        }
+        
     }
 
     /**
@@ -263,7 +268,7 @@ public abstract class AMASPSerial {
                         }
                         catch (Exception e)
                         {
-                            //devide ID extracting error
+                            //device ID extracting error
                             return pktData;
                         }
                         switch (buffer[1]) {

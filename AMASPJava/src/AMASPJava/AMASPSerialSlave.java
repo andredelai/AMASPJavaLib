@@ -27,11 +27,11 @@ public class AMASPSerialSlave extends AMASPSerial
 
     /**
      * Send a SRP (Slave Response Packet) to a master computer.
-     * @param deviceID Id of the slave device who answered. 
+     * @param deviceId Id of the slave device who answered. 
      * @param message The response message (in bytes) to be send.
      * @param msgLength The message length.
      */
-    public void sendResponse(int deviceID, byte[] message, int msgLength)
+    public void sendResponse(int deviceId, byte[] message, int msgLength)
     {
         byte[] hex;
         
@@ -50,7 +50,7 @@ public class AMASPSerialSlave extends AMASPSerial
         hex = String.format("%1$01X", getErrorCheckType().ordinal()).getBytes();
         pkt[2] = (byte)hex[0];
         //Device ID
-        hex = String.format("%1$03X", deviceID).getBytes();
+        hex = String.format("%1$03X", deviceId).getBytes();
         pkt[3] = (byte) hex[0];
         pkt[4] = (byte) hex[1];
         pkt[5] = (byte) hex[2];
