@@ -385,7 +385,7 @@ public abstract class AMASPSerial {
                                         //Extraction errorCode
                                         pktData.codeLength = (Integer.parseInt(new String(Arrays.copyOfRange(buffer, 6, 8)), 16));
                                         pktData.errorCheckType = eCheck;
-                                        pktData.type = PacketType.SIP; //CEP recognized
+                                        pktData.type = PacketType.SIP; //SIP recognized
                                         return pktData;
                                     }
                                 }
@@ -404,28 +404,26 @@ public abstract class AMASPSerial {
     }
 
     
-    protected short CRC16Check(byte[] data, int dataLength) {
-        short crc = (short) 0xFFFF;
-        for (int pos = 0; pos < dataLength; pos++) {
-            crc ^=  (short)data[pos];          // XOR byte into least sig. byte of crc
+    protected int CRC16ModbusCheck(byte[] data, int dataLength) {
+        int crc = 0xFFFF;
+            for (int pos = 0; pos < dataLength; pos++)
+            {
+                crc ^= data[pos];
 
-            for (int i = 8; i != 0; i--) // Loop over each bit
-            {                                 
-                if ((crc & 0x0001) != 0) // If the LSB is set
+                for (int i = 8; i != 0; i--) 
                 {
-                    crc >>>= 1;
-                    crc&= 0x7FFF;
-                    crc ^= 0xA001; // Polynomial
-                }
-                else
-                {
-                    crc >>>= 1;
-                    crc&= 0x7FFF;
+                    if ((crc & 0x0001) != 0) 
+                    {
+                        crc >>= 1;
+                        crc ^= 0xA001; // Polynomial Modbus
+                    }
+                    else
+                    {
+                        crc >>= 1;
+                    }
                 }
             }
-        }
-        // Note, this number has low and high bytes swapped, so use it accordingly (or swap bytes)
-        return crc;
+            return crc;
     }
 
     protected int LRC16Check(byte[] data, int dataLength) {
@@ -455,7 +453,7 @@ public abstract class AMASPSerial {
     }
     
     
-    protected int fletcher16Checksum(byte[] data, int dataLength) {
+    protected int fletcher16Check(byte[] data, int dataLength) {
         
         int sum1 = 0, sum2 = 0, index;
 
@@ -484,11 +482,11 @@ public abstract class AMASPSerial {
                 break;
 
             case fletcher16:
-                ret = fletcher16Checksum(data, dataLength);
+                ret = fletcher16Check(data, dataLength);
                 break;
 
             case CRC16:
-                ret = CRC16Check(data, dataLength);
+                ret = CRC16ModbusCheck(data, dataLength);
                 break;
 
             default:
