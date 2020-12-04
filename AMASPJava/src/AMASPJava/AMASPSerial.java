@@ -171,7 +171,7 @@ public abstract class AMASPSerial {
     }
 
     /**
-     * Close the serial connection.
+     * Closes the serial connection.
      */
     public void end() {
         if (serialCom != null) {
