@@ -30,10 +30,12 @@ public class AMASPSerialSlave extends AMASPSerial
      * @param deviceId Id of the slave device who answered. 
      * @param message The response message (in bytes) to be send.
      * @param msgLength The message length.
+     * @return The error check data.
      */
-    public void sendResponse(int deviceId, byte[] message, int msgLength)
+    public int sendResponse(int deviceId, byte[] message, int msgLength)
     {
         byte[] hex;
+        int ecd;
         
         if (message.length < msgLength)
         {
@@ -64,8 +66,9 @@ public class AMASPSerialSlave extends AMASPSerial
         {
             pkt[9 + i] = (byte) message[i];
         }
-        //CRC       
-        hex = String.format("%1$04X", errorCheck(pkt, msgLength + 9, getErrorCheckType())).getBytes();
+        //Error checking
+        ecd = errorCheck(pkt, msgLength + 9, getErrorCheckType());
+        hex = String.format("%1$04X", ecd).getBytes();
         pkt[9 + msgLength] = (byte) hex[0];
         pkt[9 + msgLength + 1] = (byte) hex[1];
         pkt[9 + msgLength + 2] = (byte) hex[2];
@@ -76,6 +79,7 @@ public class AMASPSerialSlave extends AMASPSerial
 
         //Sending request
         serialCom.writeBytes(pkt, 15 + msgLength);
+        return ecd;
     }
     
     /**
@@ -83,21 +87,24 @@ public class AMASPSerialSlave extends AMASPSerial
      * @param deviceID Id of the slave device who answered. 
      * @param message The response message (string format) to be send.
      * @param msgLength The message length.
+     * @return The error check data.
      */
-    public void sendResponse(int deviceID, String message, int msgLength)
+    public int sendResponse(int deviceID, String message, int msgLength)
     {
-        sendResponse(deviceID, message.getBytes(), msgLength);
+        return sendResponse(deviceID, message.getBytes(), msgLength);
     }
     
     /**
      * Send a SIP (Slave Interrupt Packet). 
      * @param deviceID Id of the slave device who generated the interruption.
      * @param InterrupCode The code of the interruption (0 to 255).
+     * @return The error check data.
      */
-    public void sendInterruption(int deviceID, int InterrupCode)
+    public int sendInterruption(int deviceID, int InterrupCode)
     {
         byte[] hex;
         byte[] pkt = new byte[14];
+        int ecd;
 
         //Packet Type
         pkt[0] = (byte) '!';
@@ -115,7 +122,8 @@ public class AMASPSerialSlave extends AMASPSerial
         pkt[6] = (byte) hex[0];
         pkt[7] = (byte) hex[1];
         //CRC
-        hex = String.format("%1$04X", errorCheck(pkt, 8, getErrorCheckType())).getBytes();
+        ecd = errorCheck(pkt, 8, getErrorCheckType());
+        hex = String.format("%1$04X", ecd).getBytes();
         pkt[8] = (byte) hex[0];
         pkt[9] = (byte) hex[1];
         pkt[10] = (byte) hex[2];
@@ -125,6 +133,7 @@ public class AMASPSerialSlave extends AMASPSerial
         pkt[13] = (byte) '\n';
         
         serialCom.writeBytes(pkt, 14);
+        return ecd;
     }
 
 }

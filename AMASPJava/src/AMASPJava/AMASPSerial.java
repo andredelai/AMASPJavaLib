@@ -131,6 +131,14 @@ public abstract class AMASPSerial {
         }
         
         /**
+         * @return the errorCheckData
+         */
+        public int getErrorCheckData()
+        {
+            return errorCheckData;
+        }
+        
+        /**
          * @return the codeLength
          */
         public int getCodeLength() {
@@ -142,6 +150,7 @@ public abstract class AMASPSerial {
         private byte[] message;
         private int codeLength;
         private ErrorCheckType errorCheckType;
+        private int errorCheckData;
     }
 
     public final int MSGMAXSIZE = 4096;
@@ -184,10 +193,12 @@ public abstract class AMASPSerial {
      *
      * @param deviceID Id of the target device in communication.
      * @param errorCode The communication error code (0 to 255).
+     * @return The error check data.
      */
-    public void sendError(int deviceID, int errorCode) {
+    public int sendError(int deviceID, int errorCode) {
         byte[] hex;
         byte[] pkt = new byte[14];
+        int ecd;
 
         //Packet Type
         pkt[0] = (byte) '!';
@@ -204,8 +215,9 @@ public abstract class AMASPSerial {
         hex = String.format("%1$02X", errorCode).getBytes();
         pkt[6] = (byte) hex[0];
         pkt[7] = (byte) hex[1];
-        //LRC
-        hex = String.format("%1$04X", errorCheck(pkt, 8, getErrorCheckType())).getBytes();
+        //Error checking
+        ecd = errorCheck(pkt, 8, getErrorCheckType());
+        hex = String.format("%1$04X", ecd).getBytes();
         pkt[8] = (byte) hex[0];
         pkt[9] = (byte) hex[1];
         pkt[10] = (byte) hex[2];
@@ -215,6 +227,7 @@ public abstract class AMASPSerial {
         pkt[13] = (byte) '\n';
 
         serialCom.writeBytes(pkt, 14);
+        return ecd; //Error check data
     }
 
     /**
@@ -305,6 +318,7 @@ public abstract class AMASPSerial {
                                                 System.arraycopy(buffer, 9, pktData.getMessage(), 0, pktData.getCodeLength());
                                                 pktData.type = (PacketType.MRP); //MRP recognized
                                                 pktData.errorCheckType = eCheck;
+                                                pktData.errorCheckData = aux;
                                                 return pktData;
                                             }
                                         }
@@ -343,6 +357,7 @@ public abstract class AMASPSerial {
                                                 System.arraycopy(buffer, 9, pktData.getMessage(), 0, pktData.getCodeLength());
                                                 pktData.type = (PacketType.SRP); //MRP recognized
                                                 pktData.errorCheckType = eCheck;
+                                                pktData.errorCheckData = aux;
                                                 return pktData;
                                             }
                                         }
@@ -365,6 +380,7 @@ public abstract class AMASPSerial {
                                         pktData.codeLength = (Integer.parseInt(new String(Arrays.copyOfRange(buffer, 6, 8)), 16));
                                         pktData.errorCheckType = eCheck;
                                         pktData.type = PacketType.CEP; //CEP recognized
+                                        pktData.errorCheckData = aux;
                                         return pktData;
                                     }
                                 }
@@ -386,6 +402,7 @@ public abstract class AMASPSerial {
                                         pktData.codeLength = (Integer.parseInt(new String(Arrays.copyOfRange(buffer, 6, 8)), 16));
                                         pktData.errorCheckType = eCheck;
                                         pktData.type = PacketType.SIP; //SIP recognized
+                                        pktData.errorCheckData = aux;
                                         return pktData;
                                     }
                                 }

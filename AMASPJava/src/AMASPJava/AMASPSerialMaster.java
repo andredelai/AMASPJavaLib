@@ -30,10 +30,12 @@ public class AMASPSerialMaster extends AMASPSerial
      * @param deviceId Id of the requested device in slave. 
      * @param message The message in bytes to be send.
      * @param msgLength The message length.
+     * @return The error check data.
      */
-    public void sendRequest(int deviceId, byte message[], int msgLength)
+    public int sendRequest(int deviceId, byte message[], int msgLength)
     {
         byte[] hex;
+        int ecd;
         
         if (message.length < msgLength)
         {
@@ -63,8 +65,9 @@ public class AMASPSerialMaster extends AMASPSerial
         {
             pkt[9 + i] = (byte) message[i];
         }
-        //Error checking      
-        hex = String.format("%1$04X", (short)errorCheck(pkt, msgLength + 9, getErrorCheckType())).getBytes();
+        //Error checking 
+        ecd = errorCheck(pkt, msgLength + 9, getErrorCheckType());
+        hex = String.format("%1$04X", ecd).getBytes();
         pkt[9 + msgLength] = (byte) hex[0];
         pkt[9 + msgLength + 1] = (byte) hex[1];
         pkt[9 + msgLength + 2] = (byte) hex[2];
@@ -75,6 +78,7 @@ public class AMASPSerialMaster extends AMASPSerial
 
         //Sending request
         serialCom.writeBytes(pkt, 15 + msgLength);
+        return ecd;
     }
 
     
@@ -83,9 +87,10 @@ public class AMASPSerialMaster extends AMASPSerial
      * @param deviceID Id of the requested device in slave. 
      * @param message The string message to be send.
      * @param msgLength The message length.
+     * @return The error check data.
      */
-    public void sendRequest(int deviceID, String message, int msgLength)
+    public int sendRequest(int deviceID, String message, int msgLength)
     {       
-        sendRequest(deviceID, message.getBytes(), msgLength);
+        return sendRequest(deviceID, message.getBytes(), msgLength);
     }
 }

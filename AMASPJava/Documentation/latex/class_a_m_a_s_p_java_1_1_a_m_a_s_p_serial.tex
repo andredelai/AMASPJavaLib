@@ -26,7 +26,7 @@ boolean \mbox{\hyperlink{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_ae1706e1eae0b
 \item 
 void \mbox{\hyperlink{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_a86f80b182b170fee48a6f13a3672c032}{end}} ()
 \item 
-void \mbox{\hyperlink{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_a33ea416e78a67d007dbe2ab9326205e6}{send\+Error}} (int device\+ID, int error\+Code)
+int \mbox{\hyperlink{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_a9dbbdf07abd95aa3204bb71373ec700c}{send\+Error}} (int device\+ID, int error\+Code)
 \item 
 \mbox{\hyperlink{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_1_1_packet_data}{Packet\+Data}} \mbox{\hyperlink{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_a0770b15ce35cf5a58ae6f1949c1588c9}{read\+Packet}} ()
 \end{DoxyCompactItemize}
@@ -112,11 +112,11 @@ Check if a valid packet is available and read it.
 \begin{DoxyReturn}{Returns}
 A \mbox{\hyperlink{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_1_1_packet_data}{Packet\+Data}} Object which contains the information and data from a packet. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_a33ea416e78a67d007dbe2ab9326205e6}\label{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_a33ea416e78a67d007dbe2ab9326205e6}} 
+\mbox{\Hypertarget{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_a9dbbdf07abd95aa3204bb71373ec700c}\label{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_a9dbbdf07abd95aa3204bb71373ec700c}} 
 \index{AMASPJava.AMASPSerial@{AMASPJava.AMASPSerial}!sendError@{sendError}}
 \index{sendError@{sendError}!AMASPJava.AMASPSerial@{AMASPJava.AMASPSerial}}
 \doxysubsubsection{\texorpdfstring{sendError()}{sendError()}}
-{\footnotesize\ttfamily void A\+M\+A\+S\+P\+Java.\+A\+M\+A\+S\+P\+Serial.\+send\+Error (\begin{DoxyParamCaption}\item[{int}]{device\+ID,  }\item[{int}]{error\+Code }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily int A\+M\+A\+S\+P\+Java.\+A\+M\+A\+S\+P\+Serial.\+send\+Error (\begin{DoxyParamCaption}\item[{int}]{device\+ID,  }\item[{int}]{error\+Code }\end{DoxyParamCaption})}
 
 Send a C\+EP packet (Communication Error Packet).
 
@@ -127,6 +127,9 @@ Send a C\+EP packet (Communication Error Packet).
 {\em error\+Code} & The communication error code (0 to 255). \\
 \hline
 \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The error check data. 
+\end{DoxyReturn}
 \mbox{\Hypertarget{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_ac5c88aa9168fb1e962705a47f86c9f3d}\label{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_ac5c88aa9168fb1e962705a47f86c9f3d}} 
 \index{AMASPJava.AMASPSerial@{AMASPJava.AMASPSerial}!setErrorCheckType@{setErrorCheckType}}
 \index{setErrorCheckType@{setErrorCheckType}!AMASPJava.AMASPSerial@{AMASPJava.AMASPSerial}}

@@ -9,9 +9,9 @@ Inheritance diagram for A\+M\+A\+S\+P\+Java.\+A\+M\+A\+S\+P\+Serial\+Master\+:\b
 \doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-void \mbox{\hyperlink{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_master_aacf7d2ffee10fe233847185a9ace45dd}{send\+Request}} (int device\+Id, byte message\mbox{[}$\,$\mbox{]}, int msg\+Length)
+int \mbox{\hyperlink{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_master_a41000820c059b6c2f36764e363b34a64}{send\+Request}} (int device\+Id, byte message\mbox{[}$\,$\mbox{]}, int msg\+Length)
 \item 
-void \mbox{\hyperlink{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_master_a2c18db1e26839a2c9038b24170539b26}{send\+Request}} (int device\+ID, String message, int msg\+Length)
+int \mbox{\hyperlink{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_master_aa0e894afec48f567177cdd5de5533703}{send\+Request}} (int device\+ID, String message, int msg\+Length)
 \end{DoxyCompactItemize}
 \doxysubsection*{Additional Inherited Members}
 
@@ -23,11 +23,11 @@ Andre L. Delai
 
 
 \doxysubsection{Member Function Documentation}
-\mbox{\Hypertarget{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_master_aacf7d2ffee10fe233847185a9ace45dd}\label{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_master_aacf7d2ffee10fe233847185a9ace45dd}} 
+\mbox{\Hypertarget{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_master_a41000820c059b6c2f36764e363b34a64}\label{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_master_a41000820c059b6c2f36764e363b34a64}} 
 \index{AMASPJava.AMASPSerialMaster@{AMASPJava.AMASPSerialMaster}!sendRequest@{sendRequest}}
 \index{sendRequest@{sendRequest}!AMASPJava.AMASPSerialMaster@{AMASPJava.AMASPSerialMaster}}
 \doxysubsubsection{\texorpdfstring{sendRequest()}{sendRequest()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
-{\footnotesize\ttfamily void A\+M\+A\+S\+P\+Java.\+A\+M\+A\+S\+P\+Serial\+Master.\+send\+Request (\begin{DoxyParamCaption}\item[{int}]{device\+Id,  }\item[{byte}]{message\mbox{[}$\,$\mbox{]},  }\item[{int}]{msg\+Length }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily int A\+M\+A\+S\+P\+Java.\+A\+M\+A\+S\+P\+Serial\+Master.\+send\+Request (\begin{DoxyParamCaption}\item[{int}]{device\+Id,  }\item[{byte}]{message\mbox{[}$\,$\mbox{]},  }\item[{int}]{msg\+Length }\end{DoxyParamCaption})}
 
 Send a M\+RP packet to a slave computer. 
 \begin{DoxyParams}{Parameters}
@@ -38,11 +38,14 @@ Send a M\+RP packet to a slave computer.
 {\em msg\+Length} & The message length. \\
 \hline
 \end{DoxyParams}
-\mbox{\Hypertarget{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_master_a2c18db1e26839a2c9038b24170539b26}\label{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_master_a2c18db1e26839a2c9038b24170539b26}} 
+\begin{DoxyReturn}{Returns}
+The error check data. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_master_aa0e894afec48f567177cdd5de5533703}\label{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_master_aa0e894afec48f567177cdd5de5533703}} 
 \index{AMASPJava.AMASPSerialMaster@{AMASPJava.AMASPSerialMaster}!sendRequest@{sendRequest}}
 \index{sendRequest@{sendRequest}!AMASPJava.AMASPSerialMaster@{AMASPJava.AMASPSerialMaster}}
 \doxysubsubsection{\texorpdfstring{sendRequest()}{sendRequest()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
-{\footnotesize\ttfamily void A\+M\+A\+S\+P\+Java.\+A\+M\+A\+S\+P\+Serial\+Master.\+send\+Request (\begin{DoxyParamCaption}\item[{int}]{device\+ID,  }\item[{String}]{message,  }\item[{int}]{msg\+Length }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily int A\+M\+A\+S\+P\+Java.\+A\+M\+A\+S\+P\+Serial\+Master.\+send\+Request (\begin{DoxyParamCaption}\item[{int}]{device\+ID,  }\item[{String}]{message,  }\item[{int}]{msg\+Length }\end{DoxyParamCaption})}
 
 Send a M\+RP packet to a slave computer. 
 \begin{DoxyParams}{Parameters}
@@ -53,6 +56,9 @@ Send a M\+RP packet to a slave computer.
 {\em msg\+Length} & The message length. \\
 \hline
 \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The error check data. 
+\end{DoxyReturn}
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}

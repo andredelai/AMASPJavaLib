@@ -9,11 +9,11 @@ Inheritance diagram for A\+M\+A\+S\+P\+Java.\+A\+M\+A\+S\+P\+Serial\+Slave\+:\be
 \doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-void \mbox{\hyperlink{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_slave_a5843f1985dd9461026810a3ab2c34c44}{send\+Response}} (int device\+Id, byte\mbox{[}$\,$\mbox{]} message, int msg\+Length)
+int \mbox{\hyperlink{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_slave_a422587d697eefaa50964bdc3ae371c8b}{send\+Response}} (int device\+Id, byte\mbox{[}$\,$\mbox{]} message, int msg\+Length)
 \item 
-void \mbox{\hyperlink{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_slave_a4946c9cd7c4691d5d94096fe07d12619}{send\+Response}} (int device\+ID, String message, int msg\+Length)
+int \mbox{\hyperlink{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_slave_a57df626e7f3a3e272bb8aeb1afda88ba}{send\+Response}} (int device\+ID, String message, int msg\+Length)
 \item 
-void \mbox{\hyperlink{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_slave_aa6185a4c4745e701c2eee36dbc577a99}{send\+Interruption}} (int device\+ID, int Interrup\+Code)
+int \mbox{\hyperlink{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_slave_a2ce30f092003fc33f52f8dfb8fe89c76}{send\+Interruption}} (int device\+ID, int Interrup\+Code)
 \end{DoxyCompactItemize}
 \doxysubsection*{Additional Inherited Members}
 
@@ -25,11 +25,11 @@ delai
 
 
 \doxysubsection{Member Function Documentation}
-\mbox{\Hypertarget{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_slave_aa6185a4c4745e701c2eee36dbc577a99}\label{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_slave_aa6185a4c4745e701c2eee36dbc577a99}} 
+\mbox{\Hypertarget{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_slave_a2ce30f092003fc33f52f8dfb8fe89c76}\label{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_slave_a2ce30f092003fc33f52f8dfb8fe89c76}} 
 \index{AMASPJava.AMASPSerialSlave@{AMASPJava.AMASPSerialSlave}!sendInterruption@{sendInterruption}}
 \index{sendInterruption@{sendInterruption}!AMASPJava.AMASPSerialSlave@{AMASPJava.AMASPSerialSlave}}
 \doxysubsubsection{\texorpdfstring{sendInterruption()}{sendInterruption()}}
-{\footnotesize\ttfamily void A\+M\+A\+S\+P\+Java.\+A\+M\+A\+S\+P\+Serial\+Slave.\+send\+Interruption (\begin{DoxyParamCaption}\item[{int}]{device\+ID,  }\item[{int}]{Interrup\+Code }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily int A\+M\+A\+S\+P\+Java.\+A\+M\+A\+S\+P\+Serial\+Slave.\+send\+Interruption (\begin{DoxyParamCaption}\item[{int}]{device\+ID,  }\item[{int}]{Interrup\+Code }\end{DoxyParamCaption})}
 
 Send a S\+IP (Slave Interrupt Packet). 
 \begin{DoxyParams}{Parameters}
@@ -38,11 +38,14 @@ Send a S\+IP (Slave Interrupt Packet).
 {\em Interrup\+Code} & The code of the interruption (0 to 255). \\
 \hline
 \end{DoxyParams}
-\mbox{\Hypertarget{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_slave_a5843f1985dd9461026810a3ab2c34c44}\label{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_slave_a5843f1985dd9461026810a3ab2c34c44}} 
+\begin{DoxyReturn}{Returns}
+The error check data. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_slave_a422587d697eefaa50964bdc3ae371c8b}\label{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_slave_a422587d697eefaa50964bdc3ae371c8b}} 
 \index{AMASPJava.AMASPSerialSlave@{AMASPJava.AMASPSerialSlave}!sendResponse@{sendResponse}}
 \index{sendResponse@{sendResponse}!AMASPJava.AMASPSerialSlave@{AMASPJava.AMASPSerialSlave}}
 \doxysubsubsection{\texorpdfstring{sendResponse()}{sendResponse()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
-{\footnotesize\ttfamily void A\+M\+A\+S\+P\+Java.\+A\+M\+A\+S\+P\+Serial\+Slave.\+send\+Response (\begin{DoxyParamCaption}\item[{int}]{device\+Id,  }\item[{byte\mbox{[}$\,$\mbox{]}}]{message,  }\item[{int}]{msg\+Length }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily int A\+M\+A\+S\+P\+Java.\+A\+M\+A\+S\+P\+Serial\+Slave.\+send\+Response (\begin{DoxyParamCaption}\item[{int}]{device\+Id,  }\item[{byte\mbox{[}$\,$\mbox{]}}]{message,  }\item[{int}]{msg\+Length }\end{DoxyParamCaption})}
 
 Send a S\+RP (Slave Response Packet) to a master computer. 
 \begin{DoxyParams}{Parameters}
@@ -53,11 +56,14 @@ Send a S\+RP (Slave Response Packet) to a master computer.
 {\em msg\+Length} & The message length. \\
 \hline
 \end{DoxyParams}
-\mbox{\Hypertarget{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_slave_a4946c9cd7c4691d5d94096fe07d12619}\label{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_slave_a4946c9cd7c4691d5d94096fe07d12619}} 
+\begin{DoxyReturn}{Returns}
+The error check data. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_slave_a57df626e7f3a3e272bb8aeb1afda88ba}\label{class_a_m_a_s_p_java_1_1_a_m_a_s_p_serial_slave_a57df626e7f3a3e272bb8aeb1afda88ba}} 
 \index{AMASPJava.AMASPSerialSlave@{AMASPJava.AMASPSerialSlave}!sendResponse@{sendResponse}}
 \index{sendResponse@{sendResponse}!AMASPJava.AMASPSerialSlave@{AMASPJava.AMASPSerialSlave}}
 \doxysubsubsection{\texorpdfstring{sendResponse()}{sendResponse()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
-{\footnotesize\ttfamily void A\+M\+A\+S\+P\+Java.\+A\+M\+A\+S\+P\+Serial\+Slave.\+send\+Response (\begin{DoxyParamCaption}\item[{int}]{device\+ID,  }\item[{String}]{message,  }\item[{int}]{msg\+Length }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily int A\+M\+A\+S\+P\+Java.\+A\+M\+A\+S\+P\+Serial\+Slave.\+send\+Response (\begin{DoxyParamCaption}\item[{int}]{device\+ID,  }\item[{String}]{message,  }\item[{int}]{msg\+Length }\end{DoxyParamCaption})}
 
 Send a S\+RP (Slave Response Packet) to a master computer. 
 \begin{DoxyParams}{Parameters}
@@ -68,6 +74,9 @@ Send a S\+RP (Slave Response Packet) to a master computer.
 {\em msg\+Length} & The message length. \\
 \hline
 \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The error check data. 
+\end{DoxyReturn}
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
